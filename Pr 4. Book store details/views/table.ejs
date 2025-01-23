@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>table</title>
+</head>
+<style>
+    body {
+        font-family: sans-serif;
+        margin: 0;
+        padding: 20px;
+        background-image: url('https://t4.ftcdn.net/jpg/10/19/74/93/360_F_1019749317_qL9mDTvH6GtQ1VJ8XgUMSObK3bMbFUqc.jpg');
+        background-size: cover;
+        color: #333;
+    }
+
+    h1 {
+        text-align: center;
+        margin-bottom: 20px;
+        color: #fff;
+    }
+
+    table {
+        width: 90%;
+        margin: 0 auto 20px;
+        border-collapse: collapse;
+        background: rgba(255, 255, 255, 0.9);
+    }
+
+    th,
+    td {
+        padding: 12px;
+        text-align: left;
+        border: 1px solid #ddd;
+        text-transform: capitalize;
+    }
+
+    th {
+        background-color: #f2f2f2;
+    }
+
+    tbody tr:hover {
+        background-color: #f9f9f9;
+    }
+
+    a {
+    display: inline-block;
+    padding: 12px 20px;
+    background: linear-gradient(90deg, #4CAF50, #3e8e41);
+    color: white;
+    text-decoration: none;
+    border-radius: 6px;
+    font-size: 1rem;
+    font-weight: bold;
+    transition: all 0.4s ease; 
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); 
+}
+
+a:hover {
+    background: linear-gradient(90deg, #3e8e41, #4CAF50);
+    transform: scale(1.05); 
+    box-shadow: 0 8px 16px rgba(0, 128, 0, 0.4);
+    color: #f9f9f9; 
+    text-decoration: none;
+}
+
+
+
+    .form-link {
+        display: block;
+        width: max-content;
+        margin: 0 auto;
+        padding: 10px 20px;
+        text-align: center;
+    }
+</style>
+
+<body>
+    <div align="center">
+        <h1>view user</h1>
+
+        <form action="/viewuser">
+            <table border="1" align="center">
+                <thead>
+                    <tr>
+                        <td>id</td>
+                        <td>bookname</td>
+                        <td>descripion</td>
+                        <td>price</td>
+                        <td>author name</td>
+                        <td>page</td>
+                        <td>delete</td>
+                        <td>edit</td>
+
+                    </tr>
+                </thead>
+                <tbody>
+                    <% allrecord.map((val,i)=>{
+                        %>
+                        <tr>
+                            <td>
+                                <%=val.id%>
+                            </td>
+                            <td>
+                                <%=val.userbookname%>
+                            </td>
+                            <td>
+                                <%=val.userdescripion%>
+                            </td>
+                            <td>
+                                <%=val.userprice%>
+                            </td>
+                            <td>
+                                <%=val.userauthorname%>
+                            </td>
+                            <td>
+                                <%=val.userpage%>
+                            </td>
+
+                            <td>
+                                <a href="/deleteid?did=<%= val?.id %>">Delete</a>
+                            </td>
+                            <td>
+
+                                <a href="/edituser?eid=<%= val?.id %>">Edit</a>
+                            </td>
+                        </tr>
+                        <% }) %>
+                </tbody>
+            </table>
+
+            <a href="/">form</a>
+
+        </form>
+
+    </div>
+</body>
+
+</html>
