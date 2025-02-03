@@ -48,6 +48,7 @@ app.get(`/deleteid`, (req, res) => {
             console.log(err);
             return false;
         })
+
 })
 
 app.get('/edituser', (req, res) => {
@@ -82,8 +83,8 @@ app.post(`/updateuser`, (req, res) => {
             console.log(err);
             return false;
         })
-
-})
+        
+})  
 
 app.get(`/viewuser`, (req, res) => {
     UserModel.find({})

@@ -4,152 +4,127 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Edit user</title>
+    <title>Edit Book</title>
+    <style>
+        body {
+            font-family: 'Roboto', sans-serif;
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #f4f4f9;
+        }
+
+        .form-container {
+            width: 400px;
+            padding: 25px;
+            border-radius: 8px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            background-color: #ffffff;
+        }
+
+        h1 {
+            text-align: center;
+            font-size: 24px;
+            color: #2c3e50;
+            margin-bottom: 20px;
+        }
+
+        label {
+            font-size: 16px;
+            color: #333;
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+
+        input[type="text"],
+        input[type="number"] {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 14px;
+            margin-bottom: 15px;
+            color: #555;
+            transition: border-color 0.3s ease;
+        }
+
+        input[type="text"]:focus,
+        input[type="number"]:focus {
+            border-color: #3498db;
+            outline: none;
+        }
+
+        input[type="submit"] {
+            background-color: #3498db;
+            color: #ffffff;
+            padding: 12px 20px;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            cursor: pointer;
+            width: 100%;
+            transition: background-color 0.3s ease;
+        }
+
+        input[type="submit"]:hover {
+            background-color: #2980b9;
+        }
+
+        a {
+            display: block;
+            margin-top: 15px;
+            text-align: center;
+            color: #3498db;
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: bold;
+            transition: color 0.3s ease;
+        }
+
+        a:hover {
+            color: #2980b9;
+            text-decoration: underline;
+        }
+
+        @media (max-width: 768px) {
+            .form-container {
+                width: 90%;
+                padding: 20px;
+            }
+
+            h1 {
+                font-size: 20px;
+            }
+
+            label {
+                font-size: 14px;
+            }
+        }
+    </style>
 </head>
-<style>
-    body {
-        font-family: 'Roboto', sans-serif;
-        margin: 0;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        height: 100vh;
-        background-color: #f5f7fa;
-        background-size: cover;
-        background-image: url('https://t4.ftcdn.net/jpg/10/19/74/93/360_F_1019749317_qL9mDTvH6GtQ1VJ8XgUMSObK3bMbFUqc.jpg');
-    }
-
-    .register {
-        width: 400px;
-    }
-
-    form {
-        padding: 25px 30px;
-        border-radius: 10px;
-        box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
-        width: 100%;
-        max-width: 400px;
-        background-color: #fff;
-    }
-
-    h1 {
-        color: #fff;
-        text-transform: capitalize;
-    }
-
-
-    table {
-        width: 100%;
-        border-collapse: collapse;
-    }
-
-    td {
-        padding: 10px 0;
-    }
-
-    input {
-        box-shadow: 2px 2px 5px #45a049;
-
-    }
-
-    label {
-        font-size: 18px;
-        color: #555;
-        display: block;
-        margin-bottom: 5px;
-        font-weight: 700;
-    }
-
-    input[type="text"],
-    input[type="number"] {
-        width: 100%;
-        padding: 10px;
-        border: 1px solid #ddd;
-        border-radius: 5px;
-        font-size: 14px;
-        color: #333;
-        box-sizing: border-box;
-        transition: all 0.3s ease;
-    }
-
-    input[type="text"]:focus,
-    input[type="number"]:focus {
-        border-color: #4CAF50;
-        outline: none;
-        box-shadow: 0 0 5px rgba(76, 175, 80, 0.2);
-    }
-
-    input[type="submit"] {
-        background-color: #4CAF50;
-        color: #fff;
-        padding: 12px 20px;
-        border: none;
-        border-radius: 5px;
-        font-size: 16px;
-        cursor: pointer;
-        margin-top: 15px;
-        width: 100%;
-        text-align: center;
-        transition: background-color 0.3s ease;
-    }
-
-    input[type="submit"]:hover {
-        background-color: #45a049;
-    }
-
-    a {
-        display: block;
-        margin-top: 15px;
-        text-align: center;
-        color: #4CAF50;
-        text-decoration: none;
-        font-size: 14px;
-        font-weight: bold;
-    }
-
-    a:hover {
-        text-decoration: underline;
-    }
-</style>
 
 <body>
-
-    <div class="register" align="center">
-        <h1>add book</h1>
+    <div class="form-container">
+        <h1>Edit Book</h1>
         <form action="/updateuser" method="post">
+            <label for="editid">ID</label>
+            <input type="text" id="editid" name="editid" value="<%= single?.id %>">
 
-            <table>
+            <label for="bookname">Book Name</label>
+            <input type="text" id="bookname" name="bookname" value="<%= single.bookname %>">
 
-                <tr>
-                    <label>id</label>
-                    <input type="text" name="editid" value="<%= single?.id %>">
-                </tr>
+            <label for="description">Description</label>
+            <input type="text" id="description" name="descripion" value="<%= single.descripion %>">
 
-                <tr>
-                    <td>
-                        <label>Book Name:</label>
-                        <input type="text" name="bookname" value="<%= single.bookname %>">
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        <label>Description:</label>
-                        <input type="text" name="descripion" value="<%= single.descripion %>">
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        <label>Price:</label>
-                        <input type="text" name="Price" value="<%= single.Price %>">
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        <label>Author Name:</label>
-                        <input type="text" name="authorname" value="<%= single.authorname %>">
-                    </td>
-                </tr>
-            </table>
+            <label for="price">Price</label>
+            <input type="text" id="price" name="Price" value="<%= single.Price %>">
+
+            <label for="authorname">Author Name</label>
+            <input type="text" id="authorname" name="authorname" value="<%= single.authorname %>">
+
             <input type="submit" value="Submit">
             <a href="/viewuser">View All Users</a>
         </form>
