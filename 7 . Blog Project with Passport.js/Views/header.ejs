@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html dir="ltr" lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Blog Here..</title>
+    <link rel="stylesheet" href="public/dist/css/style.css" />
+    <link href="assets/libs/flot/css/float-chart.css" rel="stylesheet" />
+    <link href="dist/css/style.min.css" rel="stylesheet" />
+    <style>
+      body {
+       background-color: white;
+        min-height: 100vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        font-family: 'Poppins', sans-serif;
+      }
+    
+      .left-sidebar {
+        background: rgba(0, 0, 0, 0.8);
+        width: 250px;
+        padding: 20px;
+        height: 100vh;
+        position: fixed;
+        top: 0;
+        left: 0;
+        color: white;
+        transition: width 0.3s ease;
+      }
+      
+      .left-sidebar:hover {
+        width: 270px;
+      }
+      
+      .sidebar-nav ul {
+        list-style: none;
+        padding: 0;
+      }
+      
+      .sidebar-item {
+        margin-bottom: 15px;
+      }
+      
+      .sidebar-link {
+        color: white;
+        text-decoration: none;
+        display: flex;
+        align-items: center;
+        padding: 10px;
+        border-radius: 5px;
+        transition:  0.3s ease, transform 0.2s ease;
+      }
+      
+      .sidebar-link:hover {
+        background: rgba(255, 255, 255, 0.87);
+        transform: scale(1.05);
+      }
+      
+      .sidebar-link i {
+        margin-right: 10px;
+      }
+    </style>
+  </head>
+  <body>
+    <aside class="left-sidebar" data-sidebarbg="skin5">
+      <div class="scroll-sidebar">
+        <nav class="sidebar-nav">
+          <ul id="sidebarnav" class="p-t-30">
+            <li class="sidebar-item">
+              <a class="sidebar-link waves-effect waves-dark sidebar-link" href="/dashboard" aria-expanded="false">
+                <i class="mdi mdi-view-dashboard"></i>
+                <span class="hide-menu">Home</span>
+              </a>
+            </li>
+            <li class="sidebar-item">
+              <a class="sidebar-link waves-effect waves-dark sidebar-link" href="/addblog" aria-expanded="false">
+                <i class="fa fa-plus fs-16"></i>
+                <span class="hide-menu">Create</span>
+              </a>
+            </li>
+            <li class="sidebar-item">
+              <a class="sidebar-link has-arrow waves-effect waves-dark" href="/logout" aria-expanded="false">
+                <i class="mdi mdi-account-key"></i>
+                <span class="hide-menu">Logout</span>
+              </a>
+            </li>
+          </ul>
+        </nav>
+      </div>
+    </aside>
+ 
+  </body>
+</html>
