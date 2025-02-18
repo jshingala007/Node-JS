@@ -5,9 +5,9 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>Blog Here..</title>
-    <link rel="stylesheet" href="public/dist/css/style.css" />
-    <link href="assets/libs/flot/css/float-chart.css" rel="stylesheet" />
-    <link href="dist/css/style.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="/public/dist/css/style.css" />
+    <link href="/assets/libs/flot/css/float-chart.css" rel="stylesheet" />
+    <link href="/dist/css/style.min.css" rel="stylesheet" />
     <style>
       body {
         background:  linear-gradient(135deg, #6a11cb, #2575fc);
@@ -182,21 +182,28 @@
       </aside>
       <div class="container">
         <div class="row">
-          <% blogs.map((blog, i) => { %>
-          <div class="col-md-6 col-lg-4 mb-4">
-            <div class="card">
-              <img src="<%= blog.image %>" class="card-img-top" alt="Blog Image" id="pics" />
-              <div class="card-body">
-                <h5 class="card-title text-capitalize"><%= blog.title %></h5>
-                <p class="card-text"><%= blog.caption %></p>
-                <div class="d-flex justify-content-between">
-                  <a href="/deleteblog?id=<%= blog._id %>" class="btn btn-danger text-white">Delete</a>
-                  <a class="btn btn-primary text-white" href="/editblog?id=<%= blog._id %>">Edit</a>
+          <% if (typeof blogs !== 'undefined' && blogs.length > 0) { %>
+            <% blogs.forEach((blog, i) => { %>
+              <div class="col-md-6 col-lg-4 mb-4">
+                <div class="card">
+                  <img src="<%= blog.image %>" class="card-img-top" alt="Blog Image" id="pics" />
+                  <div class="card-body">
+                    <h5 class="card-title text-capitalize"><%= blog.title %></h5>
+                    <p class="card-text"><%= blog.caption %></p>
+                    <div class="d-flex justify-content-between">
+                      <a href="/deleteblog?id=<%= blog._id %>" class="btn btn-danger text-white">Delete</a>
+                      <a class="btn btn-primary text-white" href="/editblog?id=<%= blog._id %>">Edit</a>
+                    </div>
+                  </div>
                 </div>
               </div>
+            <% }) %>
+          <% } else { %>
+            <div class="col-12 text-center">
+              <a href="/addblog" class="btn btn-success text-white">Create New Blog</a>
             </div>
-          </div>
-          <% }) %>
+            <h1 style="color: white;">Please check back later for new content.</h1>
+          <% } %>
         </div>
       </div>
     </div>
