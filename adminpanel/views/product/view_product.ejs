@@ -1,0 +1,258 @@
+<%- include('../header') %>
+
+<style>/* Page Styling */
+    .page-wrapper {
+        padding: 20px;
+        color: white;
+        font-family: 'Poppins', sans-serif;
+        min-width: 60vh;
+    }
+    
+    /* Layout: Sidebar + Content */
+    .content-wrapper {
+        display: flex;
+        gap: 20px;
+    }
+    
+    .sidebar-space {
+        width: 100px;
+        min-width: 35vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        color: white;
+        font-weight: bold;
+    }
+    
+    .main-content {
+        flex: 1;
+        padding: 20px;
+    }
+    
+    /* Card Styling */
+    .card {
+        background: #29292c;
+        border-radius: 12px;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+      
+        transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+    }
+    
+    .card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 6px 15px rgba(0, 0, 0, 0.4);
+    }
+    
+    .card-title {
+        font-size: 24px;
+        font-weight: bold;
+        text-align: center;
+        margin-bottom: 15px;
+        color: #007bff;
+    }
+    
+    /* Table Styling */
+    .table-container {
+        border-radius: 8px;
+        overflow: hidden;
+        background: #1e1e20;
+ 
+    }
+    
+    .table {
+        width: 100%;
+        border-collapse: collapse;
+    }
+    
+    .table thead {
+        background: #007bff;
+        color: white;
+    }
+    
+    .table thead th {
+        padding: 12px;
+        text-transform: uppercase;
+        font-size: 14px;
+    }
+    
+    .table tbody tr {
+        transition: all 0.3s ease-in-out;
+    }
+    
+    .table tbody tr:hover {
+        background: #2c2c2f;
+    }
+    
+    .table th, .table td {
+        padding: 12px;
+        text-align: center;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    }
+    
+    /* Button Styling */
+    .btn-sm {
+        padding: 8px 12px;
+        border-radius: 6px;
+        transition: all 0.3s ease-in-out;
+        font-size: 14px;
+        display: flex;
+        align-items: center;
+        gap: 5px;
+        justify-content: center;
+    }
+    
+    .btn-sm i {
+        font-size: 16px;
+    }
+    
+    /* Button Colors */
+    .btn-danger {
+        background: #dc3545;
+        border: none;
+        color: white;
+    }
+    
+    .btn-danger:hover {
+        background: #b02a37;
+    }
+    
+    .btn-primary {
+        background: #007bff;
+        border: none;
+        color: white;
+    }
+    
+    .btn-primary:hover {
+        background: #0056b3;
+    }
+    
+    .btn-success {
+        background: #28a745;
+        border: none;
+        color: white;
+    }
+    
+    .btn-success:hover {
+        background: #218838;
+    }
+    
+    /* Responsive Table */
+    @media (max-width: 768px) {
+        .content-wrapper {
+            flex-direction: column;
+        }
+    
+        .sidebar-space {
+            width: 100%;
+            height: auto;
+            min-height: unset;
+            padding: 10px;
+            text-align: center;
+        }
+    
+        .table {
+            display: block;
+            overflow-x: auto;
+            white-space: nowrap;
+        }
+    
+        .table thead {
+            display: none;
+        }
+    
+        .table tbody tr {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 10px;
+            border-radius: 10px;
+        }
+    
+        .table td {
+            display: flex;
+            justify-content: space-between;
+            padding: 10px;
+            font-size: 14px;
+        }
+    
+        .btn-sm {
+            font-size: 12px;
+        }
+    }
+</style>
+<div class="content-wrapper">
+    <!-- Sidebar Space -->
+    <div class="sidebar-space">
+        Sidebar
+    </div>
+
+    <!-- Main Content -->
+    <div class="main-content">
+        <div class="card">
+            <h4 class="card-title">View Product</h4>
+            <div class="table-container">
+                <table class="table table-hover">
+                    <thead>
+                        <tr>
+                            <th style="color: white;">#</th>
+                            <th style="color: white;">Category</th>
+                            <th style="color: white;">Subcategory</th>
+                            <th style="color: white;">Exsub Category</th>
+                            <th style="color: white;">Product</th>
+                            <th style="color: white;">Price</th>
+                            <th style="color: white;">Description</th>
+                            <th style="color: white;">Image</th>
+                            <th style="color: white;">Status</th>
+                            <th style="color: white;">Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <% product.map((pro, index) => { %>
+                            <tr>
+                                <td style="color: white;"><%= index + 1 %></td>
+                                <td style="color: white;"><%= pro?.categoryId?.category %></td>
+                                <td style="color: white;"><%= pro?.subcategoryId?.subcategory %></td>
+                                <td style="color: white;"><%= pro?.exsubcategoryId?.exsubcategory %></td>
+                                <td style="color: white;"><%= pro?.product %></td>
+                                <td style="color: white;">₹<%= pro?.price %></td>
+                                <td style="color: white;"><%= pro?.description %></td>
+                                <td style="color: white;">
+                                    <% if (pro?.image) { %>
+                                        <img src="<%= pro.image %>" alt="Product Image" width="80">
+                                    <% } else { %>
+                                        <img src="/assets/placeholder.png" alt="No Image" width="80">
+                                    <% } %>
+                                </td>
+                                <td>
+                                    <% if (pro?.status === "active") { %>
+                                        <a href="/product/changestatus?id=<%= pro.id %>&status=deactive"
+                                            class="btn btn-warning btn-sm" style="margin-top: 20px;">
+                                            <i class="fas fa-toggle-on"></i> Active
+                                        </a>
+                                    <% } else { %>
+                                        <a href="/product/changestatus?id=<%= pro.id %>&status=active"
+                                            class="btn btn-danger btn-sm" style="margin-top: 20px;">
+                                            <i class="fas fa-toggle-off"></i> Deactive
+                                        </a>
+                                    <% } %>
+                                </td>
+                                <td>
+                                    <a href="/product/editproduct?id=<%= pro?._id %>" class="btn btn-success btn-sm">
+                                        <i class="fas fa-edit"></i> Edit
+                                    </a>
+                                    <a href="/product/deleteproduct?id=<%= pro?.id %>"
+                                        class="btn btn-danger btn-sm"
+                                        onclick="return confirm('Are you sure you want to delete this product?');">
+                                        <i class="fas fa-trash"></i> Delete
+                                    </a>
+                                </td>
+                            </tr>
+                        <% }) %>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+<%- include('../footer') %>

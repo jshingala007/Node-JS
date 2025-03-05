@@ -1,0 +1,134 @@
+<%- include('../header') %>
+
+<style>
+    /* Card Styling */
+    .card {
+        background: #29292c; /* Dark background */
+        color: white;
+        border-radius: 12px;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+        padding: 15px;
+    }
+
+    .card-title {
+        font-size: 24px;
+        font-weight: bold;
+        text-align: center;
+        color: #ffffff;
+    }
+
+    /* Table Styling */
+    .table {
+        background: #3f3f41;
+        color: #ffffff;
+        border-radius: 8px;
+        overflow: hidden;
+    }
+
+    .table thead {
+        background: #007bff;
+        color: white;
+    }
+
+    .table th, .table td {
+        padding: 12px;
+        text-align: center;
+        border-bottom: 1px solid #444;
+    }
+
+    .table tbody tr:hover {
+        background: rgba(255, 255, 255, 0.1);
+        color: #fff;
+    }
+
+    /* Buttons */
+    .btn {
+        border-radius: 6px;
+        padding: 6px 12px;
+        transition: 0.3s;
+        font-weight: 500;
+    }
+
+    .btn-danger {
+        background: #ff4d4d;
+        border: none;
+    }
+
+    .btn-danger:hover {
+        background: #cc0000;
+    }
+
+    .btn-primary {
+        background: #007bff;
+        border: none;
+    }
+
+    .btn-primary:hover {
+        background: #0056b3;
+    }
+
+    .btn-success {
+        background: #28a745;
+        border: none;
+    }
+
+    .btn-success:hover {
+        background: #1e7e34;
+    }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+        .table {
+            font-size: 14px;
+        }
+    }
+</style>
+
+<div class="page-wrapper">
+    <div class="container-fluid">
+        <div class="row justify-content-center">
+            <div class="col-8">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">View Category</h5>
+                    </div>
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th scope="col"style="color: #ffffff;">ID</th>
+                                <th scope="col"style="color: #ffffff;">Category</th>
+                                <th scope="col"style="color: #ffffff;">Action</th>
+                                <th scope="col"style="color: #ffffff;">Status</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <% categories.map((cat, index) => { %>
+                                <tr>
+                                    <th scope="row"style="color: #ffffff;"><%= ++index %></th>
+                                    <td style="color: #ffffff;"><%= cat?.category %></td>
+                                    <td>
+                                        <a href="/category/deletecategory?id=<%= cat?.id %>" class="btn btn-danger btn-sm">Delete</a>
+                                        <a href="/category/editcategory?id=<%= cat?.id %>" class="btn btn-primary btn-sm">Edit</a>
+                                    </td>
+                                    <td>
+                                        <% if(cat?.status === "active") { %>
+                                            <a href="/category/changestatus?id=<%= cat?.id %>&status=deactive" class="btn btn-success btn-sm">
+                                                <%= cat?.status %>
+                                            </a>
+                                        <% } else { %>
+                                            <a href="/category/changestatus?id=<%= cat?.id %>&status=active" class="btn btn-danger btn-sm">
+                                                <%= cat?.status %>
+                                            </a>
+                                        <% } %>
+                                    </td>
+                                </tr>
+                            <% }) %>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<%- include('../footer') %>

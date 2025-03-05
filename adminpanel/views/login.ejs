@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <link rel="apple-touch-icon" sizes="76x76" href="../assets/img/apple-icon.png">
+  <link rel="icon" type="image/png" href="../assets/img/favicon.png">
+  <title>
+    PowerPanel Control Hub
+  </title>
+  <style>
+    /* General styles */
+body {
+font-family: Arial, sans-serif;
+background: #ecf0f3;
+display: flex;
+justify-content: center;
+align-items: center;
+height: 100vh;
+margin: 0;
+}
+
+/* Auth container */
+.auth-wrapper {
+text-align: center;
+}
+
+/* Neumorphic Box */
+.auth-box {
+background: #ecf0f3;
+border-radius: 20px;
+box-shadow: 8px 8px 16px #b8bec4, -8px -8px 16px #ffffff;
+padding: 30px;
+width: 350px;
+transition: all 0.3s ease;
+}
+
+/* Hide Forgot Password by default */
+.hidden {
+display: none;
+}
+
+/* Input Fields */
+input {
+width: 100%;
+padding: 12px;
+margin-bottom: 15px;
+border: none;
+border-radius: 10px;
+background: #ecf0f3;
+box-shadow: inset 5px 5px 10px #b8bec4, inset -5px -5px 10px #ffffff;
+outline: none;
+}
+/* Align Checkbox & Forgot Password Side by Side */
+.options {
+display: flex;
+align-items: center;
+justify-content: space-between;
+margin-bottom: 15px;
+}
+
+/* Style for Checkbox Label */
+.checkbox-label {
+display: flex;
+align-items: center;
+gap: 5px; /* Space between checkbox and text */
+cursor: pointer;
+box-shadow: none;
+}
+/* Buttons */
+button {
+width: 100%;
+padding: 10px;
+border: none;
+border-radius: 10px;
+background: #ecf0f3;
+box-shadow: 5px 5px 10px #b8bec4, -5px -5px 10px #ffffff;
+font-weight: bold;
+cursor: pointer;
+}
+
+button:hover {
+box-shadow: inset 5px 5px 10px #b8bec4, inset -5px -5px 10px #ffffff;
+}
+
+/* Social Login */
+.social-btns {
+display: flex;
+justify-content: space-around;
+margin-top: 10px;
+}
+
+.social-btn {
+display: flex;
+align-items: center;
+padding: 10px;
+border-radius: 10px;
+background: #ecf0f3;
+box-shadow: 5px 5px 10px #b8bec4, -5px -5px 10px #ffffff;
+cursor: pointer;
+width: 100px;
+margin: 15px;
+justify-content: center;
+}
+
+.social-btn img {
+width: 20px;
+margin-right: 5px;
+}
+
+/* Forgot Password & Register Links */
+.toggle-text, a {
+color: #007bff;
+cursor: pointer;
+text-decoration: none;
+}
+
+.toggle-text:hover, a:hover {
+text-decoration: underline;
+}
+
+</style>
+</head>
+
+<body class="bg-gray-200">
+  <div class="auth-wrapper">
+    <div class="auth-box" id="loginBox">
+        <h3><b>Login</b></h3>
+        <form action="/loginuser" method="post">
+            <input type="email" name="email" placeholder="Email Address" required>
+            <input type="password" name="password" placeholder="Password" required>
+            <div class="options">
+                <label class="checkbox-label">
+                    <input type="checkbox" style="    box-shadow: none;
+width: 20px; margin-top: 12px;"> Keep me signed in
+                </label>
+                <span class="toggle-text" onclick="toggleForm()">Forgot Password?</span>
+            </div>
+            <button type="submit">Login</button>
+        </form>
+        <div class="social-login">
+            <p>Or login with</p>
+            <div class="social-btns">
+                <div class="social-btn">
+                    <img src="../assets/images/authentication/google.svg" alt="Google"> Google
+                </div>
+                <div class="social-btn">
+                    <img src="../assets/images/authentication/twitter.svg" alt="Twitter"> Twitter
+                </div>
+                <div class="social-btn">
+                    <img src="../assets/images/authentication/facebook.svg" alt="Facebook"> Facebook
+                </div>
+            </div>
+        </div>
+        <p>Don't have an account? <a href="/register">Register</a></p>
+    </div>
+
+    <div class="auth-box hidden" id="forgotPasswordBox">
+        <h3><b>Forgot Password</b></h3>
+        <form action="/forgotpassword" method="post">
+            <input type="email" name="useremail" placeholder="Enter your email" required>
+            <button type="submit">Reset Password</button>
+        </form>
+        <p class="toggle-text" onclick="toggleForm()">Back to Login</p>
+    </div>
+</div>
+
+<script>
+    function toggleForm() {
+        document.getElementById('loginBox').classList.toggle('hidden');
+        document.getElementById('forgotPasswordBox').classList.toggle('hidden');
+    }
+</script>
+  <!--   Core JS Files   -->
+  <script src="../assets/js/core/popper.min.js"></script>
+  <script src="../assets/js/core/bootstrap.min.js"></script>
+  <script src="../assets/js/plugins/perfect-scrollbar.min.js"></script>
+  <script src="../assets/js/plugins/smooth-scrollbar.min.js"></script>
+  <script>
+    var win = navigator.platform.indexOf('Win') > -1;
+    if (win && document.querySelector('#sidenav-scrollbar')) {
+      var options = {
+        damping: '0.5'
+      }
+      Scrollbar.init(document.querySelector('#sidenav-scrollbar'), options);
+    }
+  </script>
+  <!-- Github buttons -->
+  <script async defer src="https://buttons.github.io/buttons.js"></script>
+  <!-- Control Center for Material Dashboard: parallax effects, scripts for the example pages etc -->
+  <script src="../assets/js/material-dashboard.min.js?v=3.2.0"></script>
+
+  <script>
+    document.getElementById("showForgotPassword").addEventListener("click", function (event) {
+      event.preventDefault();
+      document.getElementById("forgotPasswordSection").style.display = "block";
+      document.querySelector(".main-content").style.display = "none";
+
+    });
+
+
+  </script>
+</body>
+
+</html>

@@ -1,0 +1,91 @@
+<%- include('../header') %>
+<style>
+    /* Card Styling */
+    .card {
+        background: #29292c; /* Dark Theme */
+        color: white;
+        border: none;
+        border-radius: 12px;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        transition: transform 0.3s ease-in-out;
+    }
+
+    .card:hover {
+        transform: translateY(-5px);
+    }
+
+    .card-title {
+        font-size: 22px;
+        font-weight: bold;
+        text-align: center;
+    }
+
+    /* Input Styling */
+    .form-control {
+        background: #1e1e20;  /* Dark input background */
+        color: #ffffff;       /* White text */
+        border: 1px solid #444; /* Dark border */
+        border-radius: 8px;
+        transition: all 0.3s ease-in-out;
+    }
+
+    .form-control::placeholder {
+        color: #aaa; /* Lighter placeholder */
+    }
+
+    .form-control:focus {
+        border-color: #007bff;
+        box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+        background: #262626; /* Slightly lighter on focus */
+    }
+
+    /* Button */
+    .btn-primary {
+        width: 100%;
+        font-size: 16px;
+        padding: 10px;
+        border-radius: 8px;
+        background-color: #007bff;
+        color: white;
+        transition: all 0.3s ease-in-out;
+    }
+
+    .btn-primary:hover {
+        background-color: #0056b3;
+    }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+        .col-md-6 {
+            width: 90%;
+        }
+    }
+</style>
+
+<div class="page-wrapper">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-md-6">
+                <div class="card p-4">
+                    <form class="form-horizontal" method="post" action="/category/insertcategory">
+                        <div class="card-body">
+                            <h4 class="card-title">Add Category</h4>
+                            <div class="form-group">
+                                <label for="fname" class="col-form-label" style="color: #ffffff;">Category Name</label>
+                                <input type="text" name="category" class="form-control"
+                                    placeholder="Enter Category Name">
+                            </div>
+                        </div>
+                        <div class="border-top">
+                            <div class="card-body">
+                                <button type="submit" class="btn btn-primary">Submit</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<%- include('../footer') %>

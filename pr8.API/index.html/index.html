@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div align="center">
+        <h2>view users</h2>
+        <table border="1">
+            <thead>
+                <tr>
+                    <td>id</td>
+                    <td>Name</td>
+                    <td>Phone</td>
+                </tr>
+            </thead>
+            <tbody id="userdata"></tbody>
+        </table>
+    </div>
+    <script type="text/javascript">
+        const getUser = async() => {
+
+            try{
+
+                let res = await fetch(`http:`,{
+
+                    headers:{
+                        'Content-type':'application/json'
+
+                    }
+                });
+
+                let data =await res.json();
+                let users=data.users;
+                if(data,success){
+                    let tbl ="";
+                    users.forEach((val,index)=>{
+                        tbl += `
+                            <tr>
+                                <td>${val.id}</td>
+                                <td>${val.name}</td>
+                                <td>${val.phone}</td>
+                             </tr>
+                             `   
+                    })
+                    document.getElementById('usersdata').innerHTML=tbl;
+                }
+            }catch(err){
+                console.log(err);
+                return false;
+
+            }
+        }
+        getUser();
+    </script>
+    
+</body>
+</html>
