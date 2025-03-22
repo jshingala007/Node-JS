@@ -1,0 +1,101 @@
+<%- include('../header') %>
+
+<style>
+    /* Page Layout */
+    .page-wrapper {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 50vh;
+       
+    }
+
+    /* Card Styling */
+    .card {
+        background: #29292c;
+        color: white;
+        border-radius: 12px;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+        padding: 20px;
+        transition: transform 0.3s ease-in-out;
+    }
+
+    .card:hover {
+        transform: translateY(-5px);
+    }
+
+    .card-title {
+        font-size: 22px;
+        font-weight: bold;
+        text-align: center;
+        margin-bottom: 15px;
+    }
+
+    /* Input Field Styling */
+    .form-control {
+        border-radius: 8px;
+        background: #1e1e20;
+        border: 1px solid #444;
+        color: white;
+        transition: all 0.3s ease-in-out;
+    }
+
+    .form-control:focus {
+        border-color: #ffffff;
+        box-shadow: 0 0 5px rgba(255, 255, 255, 0.5);
+        background: #29292c;
+        color: white;
+    }
+
+    /* Button */
+    .btn-primary {
+        width: 100%;
+        font-size: 16px;
+        padding: 10px;
+        border-radius: 8px;
+        background-color: #007bff;
+        color: white;
+        transition: all 0.3s ease-in-out;
+        border: none;
+    }
+
+    .btn-primary:hover {
+        background-color: #0056b3;
+    }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+        .col-md-6 {
+            width: 90%;
+        }
+    }
+</style>
+
+<div class="page-wrapper">
+    <div class="container-fluid">
+        <div class="row justify-content-center">
+            <div class="col-md-6">
+                <div class="card">
+                    <form class="form-horizontal" method="post" action="/category/updatecategory">
+                        <input type="hidden" name="editid" value="<%= single?.id %>">
+                        <div class="card-body">
+                            <h4 class="card-title">Edit Category</h4>
+                            <div class="form-group">
+                                <label for="fname" class="col-form-label" style="color: #ffffff;">Category Name</label>
+                                <input type="text" value="<%= single?.category %>" name="category"
+                                    class="form-control" placeholder="Enter Category Name">
+                            </div>
+                        </div>
+                        <div class="border-top">
+                            <div class="card-body">
+                                <button type="submit" class="btn btn-primary">Submit</button>
+                            </div>
+                        </div>
+                    </form>
+                </div> 
+            </div>
+        </div>
+    </div>
+</div>
+
+<%- include('../footer') %>

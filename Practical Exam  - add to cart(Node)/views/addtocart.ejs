@@ -1,0 +1,566 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shopping Cart</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+    <link rel="stylesheet" href="https://unpkg.com/boxicons@2.0.7/css/boxicons.min.css">
+    <style>
+        /* General Reset */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: "Poppins", sans-serif;
+        }
+
+        /* Sidebar */
+        .sidebar {
+            position: fixed;
+            left: 0;
+            top: 0;
+            height: 100%;
+            width: 78px;
+            /* Default sidebar width */
+            background: #11101D;
+            /* Dark background color for sidebar */
+            padding: 6px 14px;
+            z-index: 99;
+            /* Ensures sidebar is on top */
+            transition: all 0.5s ease;
+            /* Smooth transition for width change */
+        }
+
+        /* Logo details within the sidebar */
+        .sidebar .logo-details {
+            height: 60px;
+            display: flex;
+            align-items: center;
+            position: relative;
+        }
+
+        .sidebar .logo-details .icon {
+            opacity: 0;
+            /* Hidden by default, shows when sidebar is expanded */
+            transition: all 0.5s ease;
+        }
+
+        .sidebar .logo-details .logo_name {
+            color: #fff;
+            font-size: 20px;
+            font-weight: 600;
+            opacity: 0;
+            /* Hidden by default, shows when sidebar is expanded */
+            transition: all 0.5s ease;
+        }
+
+        .sidebar .logo-details #btn {
+            position: absolute;
+            top: 50%;
+            right: 0;
+            transform: translateY(-50%);
+            font-size: 23px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.5s ease;
+        }
+
+        /* General icon styling */
+        .sidebar i {
+            color: #fff;
+            height: 60px;
+            min-width: 50px;
+            font-size: 28px;
+            text-align: center;
+            line-height: 60px;
+            /* Centers icon vertically */
+        }
+
+        /* Sidebar navigation list styling */
+        .sidebar .nav-list {
+            height: calc(100% - 140px);
+            /* Leaves space for logo and profile */
+        }
+
+        /* Scrollbar styles for sidebar */
+        .sidebar .scroll {
+            overflow-y: auto;
+            /* Enables vertical scrolling */
+            scrollbar-width: thin;
+        }
+
+        .sidebar .scroll::-webkit-scrollbar {
+            width: 8px;
+            background: #262440;
+            /* Scrollbar background color */
+            border-radius: 5px;
+        }
+
+        .sidebar .scroll::-webkit-scrollbar-thumb {
+            background: #262440;
+            /* Scrollbar thumb color */
+            border-radius: 5px;
+        }
+
+        .sidebar .scroll::-webkit-scrollbar-track {
+            background: #171526;
+            /* Scrollbar track color */
+            border-radius: 5px;
+        }
+
+        /* Sidebar navigation item styling */
+        .sidebar li {
+            position: relative;
+            margin: 8px 8px 8px 0;
+            list-style: none;
+        }
+
+        .sidebar li .tooltip {
+            position: absolute;
+            top: -20px;
+            left: calc(100% + 15px);
+            z-index: 3;
+            background: #fff;
+            box-shadow: 0 5px 10px rgba(0, 0, 0, 0.3);
+            padding: 6px 12px;
+            border-radius: 4px;
+            font-size: 15px;
+            font-weight: 400;
+            opacity: 0;
+            /* Hidden by default */
+            pointer-events: none;
+            transition: 0s;
+        }
+
+        .sidebar li:hover .tooltip {
+            opacity: 1;
+            /* Shows tooltip on hover */
+            pointer-events: auto;
+            transition: all 0.4s ease;
+            top: 50%;
+            transform: translateY(-50%);
+        }
+
+        /* Link styling within sidebar items */
+        .sidebar li a {
+            display: flex;
+            height: 100%;
+            width: 100%;
+            border-radius: 12px;
+            align-items: center;
+            text-decoration: none;
+            transition: all 0.4s ease;
+            background: #11101D;
+            /* Default background for links */
+        }
+
+        .sidebar li a:hover {
+            background: #1d1b31;
+            /* Lighter background on hover */
+        }
+
+        /* Link text and icon hover effects */
+        .sidebar li a:hover .links_name {
+            transition: all 0.5s ease;
+        }
+
+        .sidebar li a:hover i {
+            transition: all 0.5s ease;
+        }
+
+        /* Link text styling */
+        .sidebar li a .links_name {
+            color: #fff;
+            font-size: 15px;
+            font-weight: 400;
+            white-space: nowrap;
+            opacity: 0;
+            /* Hidden by default */
+            pointer-events: none;
+            transition: 0.4s;
+        }
+
+        /* Icon styling within sidebar items */
+        .sidebar li i {
+            height: 50px;
+            line-height: 50px;
+            /* Centers icon vertically */
+            font-size: 18px;
+            border-radius: 12px;
+        }
+
+        /* Profile details styling */
+        .sidebar li .profile-details {
+            display: flex;
+            align-items: center;
+            flex-wrap: nowrap;
+        }
+
+        .sidebar li img {
+            height: 45px;
+            width: 45px;
+            object-fit: cover;
+            border-radius: 6px;
+            margin-right: 10px;
+        }
+
+        /* Sidebar input (search) styling */
+        .sidebar input {
+            font-size: 15px;
+            color: #FFF;
+            font-weight: 400;
+            outline: none;
+            height: 50px;
+            width: 50px;
+            /* Default width for search input */
+            border: none;
+            border-radius: 12px;
+            transition: all 0.5s ease;
+            background: #1d1b31;
+            /* Input background color */
+        }
+
+        /* Search button styling */
+        .sidebar .bx-search {
+            position: absolute;
+            top: 50%;
+            left: 0;
+            transform: translateY(-50%);
+            font-size: 22px;
+            background: #1d1b31;
+            color: #FFF;
+        }
+
+        .sidebar .bx-search:hover {
+            background: #FFF;
+            /* Hover background color */
+            color: #11101d;
+            /* Hover text color */
+        }
+
+        /* Profile section styling */
+        .sidebar li.profile {
+            position: fixed;
+            height: 60px;
+            width: 78px;
+            /* Default width for profile section */
+            left: 0;
+            bottom: -8px;
+            padding: 10px 14px;
+            background: #1d1b31;
+            transition: all 0.5s ease;
+            overflow: hidden;
+        }
+
+        .sidebar li.profile .name {
+            font-size: 15px;
+            font-weight: 400;
+            color: #fff;
+            white-space: nowrap;
+        }
+
+        .sidebar li.profile .job {
+            font-size: 12px;
+            font-weight: 400;
+            color: #fff;
+            white-space: nowrap;
+        }
+
+        /* Logout button styling */
+        .sidebar .profile #log_out {
+            position: absolute;
+            top: 50%;
+            right: 0;
+            transform: translateY(-50%);
+            background: #1d1b31;
+            width: 100%;
+            height: 60px;
+            line-height: 60px;
+            /* Centers logout icon vertically */
+            border-radius: 0px;
+            transition: all 0.5s ease;
+        }
+
+        /* Expanded sidebar styles */
+        .sidebar.open {
+            width: 250px;
+            /* Expanded sidebar width */
+        }
+
+        .sidebar.open .logo-details .icon {
+            opacity: 1;
+            /* Shows icon in expanded state */
+        }
+
+        .sidebar.open .logo-details .logo_name {
+            opacity: 1;
+            /* Shows logo name in expanded state */
+        }
+
+        .sidebar.open .logo-details #btn {
+            text-align: right;
+        }
+
+        .sidebar.open li .tooltip {
+            display: none;
+            /* Hides tooltips when expanded */
+        }
+
+        .sidebar.open li a .links_name {
+            opacity: 1;
+            /* Shows link names when expanded */
+            pointer-events: auto;
+        }
+
+        .sidebar.open input {
+            padding: 0 20px 0 50px;
+            width: 100%;
+            /* Expands input width */
+        }
+
+        .sidebar.open .bx-search:hover {
+            background: #1d1b31;
+            color: #FFF;
+        }
+
+        .sidebar.open li.profile {
+            width: 250px;
+            /* Expands profile section */
+        }
+
+        .sidebar.open .profile #log_out {
+            width: 50px;
+            /* Shrinks logout button */
+            background: none;
+        }
+
+        .sidebar.open~.home-section {
+            left: 250px;
+            /* Adjusts home section to sidebar width */
+            width: calc(100% - 250px);
+        }
+
+        /* Main Content */
+        .content {
+            margin-left: 80px;
+            padding: 20px;
+            transition: 0.4s;
+            background: #F4F4F9;
+            min-height: 100vh;
+        }
+
+        .cart-container {
+            background: white;
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            max-width: 900px;
+            margin: auto;
+        }
+
+        .cart-container h2 {
+            margin-bottom: 20px;
+            color: #000000;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+        }
+
+        /* Table Styling */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        th, td {
+            padding: 12px;
+            text-align: center;
+            border-bottom: 1px solid #ddd;
+        }
+
+        th {
+            background: #202020;
+            color: white;
+        }
+
+        td img {
+            width: 50px;
+            height: 50px;
+            border-radius: 5px;
+        }
+
+        /* Quantity Input */
+        input[type="number"] {
+            width: 50px;
+            padding: 5px;
+            text-align: center;
+            border-radius: 5px;
+            border: 1px solid #ddd;
+        }
+
+        /* Remove Button */
+        .remove-btn {
+            background: #FF3B30;
+            border: none;
+            color: white;
+            padding: 8px 12px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        .remove-btn:hover {
+            background: #D32F2F;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .sidebar {
+                width: 60px;
+            }
+
+            .sidebar.open {
+                width: 200px;
+            }
+
+            .content {
+                margin-left: 60px;
+            }
+
+            .sidebar.open ~ .content {
+                margin-left: 200px;
+            }
+
+            th, td {
+                font-size: 14px;
+                padding: 8px;
+            }
+
+            .remove-btn {
+                padding: 5px 8px;
+                font-size: 12px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Sidebar -->
+    <div class="sidebar">
+      <div class="logo-details">
+          <!-- Icon and logo name -->
+          <i class='bx bxl-c-plus-plus icon'></i>
+          <div class="logo_name">Blog App</div>
+          <i class='bx bx-menu' id="btn"></i> <!-- Menu button to toggle sidebar -->
+      </div>
+      <ul class="nav-list">
+          <!-- Search bar -->
+          <li>
+              <i class='bx bx-search'></i>
+              <input type="text" placeholder="Search...">
+              <span class="tooltip">Search</span>
+          </li>
+          <!-- List of navigation items -->
+          <li>
+              <a href="/dashboard">
+                  <i class='bx bx-grid-alt'></i>
+                  <span class="links_name">Dashboard</span>
+              </a>
+              <span class="tooltip">Dashboard</span>
+          </li>
+          <!-- Additional navigation items -->
+          <li>
+              <a href="/add">
+                <i class="fa-solid fa-plus"></i>
+                
+              </a>
+              <span class="tooltip">Add Blog</span>
+            </li>
+            <li>
+              <a href="/addtocart">
+                <i class="fa-solid fa-shopping-cart"></i> <!-- Cart Icon -->
+              </a>
+              <span class="tooltip">View Cart</span>
+            </li>
+          <!-- Profile section -->
+          <li class="profile">
+              <div class="profile-details">
+                  <!--<img src="profile.jpg" alt="profileImg">-->
+                  <div class="name_job">
+                      <div class="name"> Log out </div>
+                  </div>
+              </div>
+              <i class='bx bx-log-out' id="log_out"></i> <!-- Logout icon -->
+          </li>
+      </ul>
+  </div>
+
+    <!-- Main Content -->
+    <div class="content">
+        <div class="cart-container">
+            <h2>Your Shopping Cart</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Product</th>
+                        <th>Title</th>
+                        <th>Quantity</th>
+                        <th>Price</th>
+                        <th>Total</th>
+                        <th>Delete</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <% cart.map((item) => { %>
+                        <tr>
+                            <td><img src="<%= item.productId?.image || '/images/default-placeholder.png' %>" alt="Product"></td>
+                            <td><%= item.productId?.title %></td>
+                            <td><input type="number" value="<%= item.productId?.quantity %>" min="1"></td>
+                            <td>$<%= item.productId?.price %></td>
+                            <td>$<%= (item.productId?.price * item.productId?.quantity).toFixed(2) %></td>
+                            <td><button class="remove-btn" data-title="<%= item.productId?.title %>">DELETE</button></td>
+                        </tr>
+                    <% }); %>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <script>
+        document.querySelector("#menu-btn").addEventListener("click", function() {
+            document.querySelector(".sidebar").classList.toggle("open");
+        });
+    </script>
+    <script>
+     document.addEventListener("DOMContentLoaded", function () {
+    document.querySelectorAll(".remove-btn").forEach(button => {
+        button.addEventListener("click", async function () {
+            let row = this.closest("tr"); // Get the closest row
+            let productName = this.getAttribute("data-title"); // Get product title from button
+
+            // Remove the row from the table
+            row.remove();
+
+            try {
+                // Send request to server to remove item
+                let response = await fetch("/remove-from-cart", {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({ title: productName })
+                });
+
+                let data = await response.json();
+                console.log("Item removed:", data);
+            } catch (error) {
+                console.error("Error removing item:", error);
+            }
+        });
+    });
+});
+
+  </script>
+  
+
+</body>
+</html>

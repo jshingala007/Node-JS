@@ -1,0 +1,173 @@
+<%- include('../header') %>
+
+<style>
+    /* Page Styling */
+    .page-wrapper {
+        padding: 20px;
+        color: white;
+        font-family: 'Poppins', sans-serif;
+        min-width: 60vh;
+        margin-left: 210px;
+    }
+
+    /* Card Styling */
+    .card {
+        background: #29292c;
+        border-radius: 12px;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+        padding: 20px;
+        transition: transform 0.3s ease-in-out;
+    }
+
+    .card:hover {
+        transform: translateY(-5px);
+    }
+
+    .card-title {
+        font-size: 22px;
+        font-weight: bold;
+        text-align: center;
+        margin-bottom: 15px;
+    }
+
+    /* Table Styling */
+    .table {
+        border-radius: 8px;
+        overflow: hidden;
+        background: #1e1e20;
+    }
+
+    .table thead {
+        background: #007bff;
+        color: white;
+    }
+
+    .table tbody tr {
+        transition: all 0.3s ease-in-out;
+    }
+
+    .table tbody tr:hover {
+        background: #2c2c2f;
+    }
+
+    .table th, .table td {
+        padding: 12px;
+        text-align: center;
+    }
+
+    /* Button Styling */
+    .btn-sm {
+        padding: 8px 12px;
+        border-radius: 6px;
+        transition: all 0.3s ease-in-out;
+    }
+
+    .btn-danger {
+        background: #dc3545;
+        border: none;
+    }
+
+    .btn-danger:hover {
+        background: #b02a37;
+    }
+
+    .btn-primary {
+        background: #007bff;
+        border: none;
+    }
+
+    .btn-primary:hover {
+        background: #0056b3;
+    }
+
+    .btn-success {
+        background: #28a745;
+        border: none;
+    }
+
+    .btn-success:hover {
+        background: #218838;
+    }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+        .table {
+            display: block;
+            overflow-x: auto;
+        }
+
+        .col-12 {
+            width: 100%;
+        }
+    }
+</style>
+    <div class="page-wrapper">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-12 text-center">
+                    <div class="card">
+                        <div class="card-body">
+                            <h5 class="card-title m-b-0" style="color: white;">View Exsubcategory</h5>
+                        </div>
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th scope="col" style="color: white;">Id</th>
+                                    <th scope="col" style="color: white;">Category</th>
+                                    <th scope="col" style="color: white;">Subcategory</th>
+                                    <th scope="col" style="color: white;">Exsubcategory</th>
+                                    <th scope="col" style="color: white;">Action</th>
+                                    <th scope="col" style="color: white;">Status</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <% exsubcategory.map((exsubcat,index)=>{ %>
+                                    <tr>
+                                        <th scope="row" style="color: white;">
+                                            <%= ++index %>
+                                        </th>
+                                        <td  style="color: white;">
+                                            <%= exsubcat.categoryId.category %>
+                                        </td>
+                                        <td  style="color: white;">
+                                            <%= exsubcat.subcategoryId.subcategory %>
+                                        </td>
+                                        <td  style="color: white;">
+                                            <%= exsubcat.exsubcategory %>
+                                        </td>
+                                        <td  style="color: white;">
+                                            <a href="/exsubcategory/deleteexsubcategory?id=<%= exsubcat?.id %>"
+                                                class="btn btn-danger btn-sm">Delete</a>
+
+
+                                            <a href="/exsubcategory/editexsubcategory?id=<%= exsubcat?.id %>"
+                                                class="btn btn-primary btn-sm">Edit</a>
+                                        </td>
+                                        <td>
+
+                                            <% if(exsubcat?.status==="active" ) { %>
+                                                <a href="/exsubcategory/changestatus?id=<%= exsubcat?.id %>&status=deactive"
+                                                    class="btn btn-success btn-sm">
+                                                    <%= exsubcat?.status %>
+                                                </a>
+                                                <% } else { %>
+                                                    <a href="/exsubcategory/changestatus?id=<%= exsubcat?.id %>&status=active"
+                                                        class="btn btn-danger btn-sm">
+                                                        <%= exsubcat?.status %>
+                                                    </a>
+                                                    <% } %>
+
+                                        </td>
+                                    </tr>
+                                    <% }) %>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+    <%- include('../footer') %>

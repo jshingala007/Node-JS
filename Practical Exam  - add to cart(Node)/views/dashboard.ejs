@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Modern Dashboard</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+    <link rel="stylesheet" href="https://unpkg.com/boxicons@2.0.7/css/boxicons.min.css"> 
+</head>
+<style>
+/* Global Styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "Poppins", sans-serif;
+}
+
+/* Sidebar */
+.sidebar {
+    position: fixed;
+    left: 0;
+    top: 0;
+    height: 100%;
+    width: 80px;
+    background: linear-gradient(135deg, #1d1b31, #343a40);
+    padding: 10px;
+    z-index: 100;
+    transition: width 0.4s ease;
+}
+.sidebar:hover {
+    width: 250px;
+}
+.sidebar a {
+    display: flex;
+    align-items: center;
+    padding: 10px;
+    color: white;
+    text-decoration: none;
+}
+.sidebar a i {
+    font-size: 24px;
+    margin-right: 10px;
+}
+.sidebar a span {
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+.sidebar:hover a span {
+    opacity: 1;
+}
+
+/* Main Section */
+.home-section {
+    background: #f4f6f9;
+    min-height: 100vh;
+    padding: 20px;
+    margin-left: 80px;
+    transition: margin-left 0.4s ease;
+}
+.sidebar:hover ~ .home-section {
+    margin-left: 250px;
+}
+
+/* Product Grid */
+.product-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(365px, 1fr));
+    gap: 20px;
+    padding: 20px;
+}
+
+/* Product Cards */
+.card {
+    display: flex;
+    align-items: center;
+    background: rgba(255, 255, 255, 0.15);
+    backdrop-filter: blur(10px);
+    border-radius: 15px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    padding: 15px;
+    gap: 10px;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    
+    /* NEW: Reduced width */
+    max-width: 450px;
+    width: 100%;
+    
+}
+
+.card:hover {
+    transform: scale(1.05);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
+}
+
+/* Product Image */
+.card-img {
+    flex: 1;
+}
+.card-img img {
+    width: 100%;
+    max-width: 150px; /* Fixed size */
+    border-radius: 10px;
+}
+
+/* Product Details */
+.card-content {
+    flex: 2;
+}
+.card-content h4 {
+    margin-bottom: 10px;
+    font-size: 20px;
+}
+.card-content p {
+    font-size: 18px;
+    color: #333;
+}
+
+/* Buttons */
+.read-more-btn {
+    display: inline-block;
+    padding: 8px 12px;
+    background: #007bff;
+    color: white;
+    font-weight: bold;
+    border-radius: 5px;
+    text-decoration: none;
+    margin-top: 10px;
+    transition: 0.3s ease;
+}
+.read-more-btn:hover {
+    background: #0056b3;
+}
+
+/* Floating Action Button */
+.fab {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    background: #ff5722;
+    color: white;
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 24px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    cursor: pointer;
+    transition: 0.3s ease;
+}
+.fab:hover {
+    background: #e64a19;
+    transform: scale(1.1);
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .card {
+        flex-direction: column;
+        text-align: center;
+    }
+    .card-img img {
+        max-width: 100%;
+    }
+}
+/* Edit Button */
+.edit-btn {
+    background: #007bff;
+    width: 43%;
+}
+.edit-btn:hover {
+    background: #0056b3;
+}
+
+/* Delete Button */
+.delete-btn {
+    background: #dc3545;
+    width: 46%;
+}
+.delete-btn:hover {
+    background: #a71d2a;
+}
+
+/* Add to Cart Button */
+.cart-btn {
+    background: #28a745;
+}
+.cart-btn:hover {
+    background: #1e7e34;
+}
+.btn {
+    flex: 1; 
+    padding: 8px 12px;
+    border: none;
+    border-radius: 5px;
+    font-size: 14px;
+    cursor: pointer;
+    text-align: center;
+    text-decoration: none;
+    color: white;
+    transition: 0.3s ease;
+    display: inline-block;
+    margin: 5px;
+}
+.custom-cart-btn {
+    background: #ff9800;
+    width: 100%;
+
+}
+.custom-cart-btn:hover {
+    background: #e68900;
+}
+</style>
+<body>
+
+<!-- Sidebar -->
+<div class="sidebar">
+    <a href="/dashboard"><i class="fas fa-home"></i><span>Dashboard</span></a>
+    <a href="/add"><i class="fas fa-plus"></i><span>Add Product</span></a>
+    <a href="/addtocart"><i class="fas fa-shopping-cart"></i><span>Cart</span></a>
+    <a href="/logoutuser"><i class="fas fa-sign-out-alt"></i><span>Logout</span></a>
+</div>
+
+<!-- Main Content -->
+<section class="home-section">
+    <h2>Dashboard</h2>
+    <div class="product-grid">
+        <% product.map((val) => { %>
+            <div class="card">
+                <div class="card-img">
+                    <img src="<%= val.image %>" alt="">
+                </div>
+                <div class="card-content">
+                    <h4><%= val.title %></h4>
+                    <p>$<%= val.price %></p>
+                 
+                    <div class="card-buttons">
+                        <a href="/editblog?editid=<%= val.id %>" class="btn edit-btn">✏️ Edit</a>
+                        <a href="/deleteblog?deleteid=<%= val.id %>" class="btn delete-btn">🗑 Delete</a>
+                        <a class="btn cart-btn custom-cart-btn" href="/addtocart?atcid=<%= val.id %>" onclick="addToCart('<%= val.id %>', '<%= val.title %>', '<%= val.price %>')">🛒 Add to Cart</a>
+                    </div>
+                </div>
+            </div>
+        <% }); %>
+    </div>
+</section>
+
+<!-- Floating Action Button -->
+<a href="/add" class="fab" title="Add Product">
+    <i class="fas fa-plus"></i>
+</a>
+
+
+<script>
+    function deleteProduct(id) {
+        if (confirm("🗑️ Are you sure you want to delete this product?")) {
+            fetch(`/deleteblog?deleteid=${id}`, { method: "GET" })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        alert("✅ Product deleted successfully!");
+                        location.reload(); // Reload the page after deletion
+                    } else {
+                        alert("❌ Error deleting product: " + data.message);
+                    }
+                })
+                .catch(error => console.error("❌ Error:", error));
+        }
+    }
+    </script>
+</body>
+</html>

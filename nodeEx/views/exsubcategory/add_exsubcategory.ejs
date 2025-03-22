@@ -1,0 +1,145 @@
+<%- include('../header') %>
+<style>
+    /* Page Wrapper */
+    .page-wrapper {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 90vh;
+
+    }
+
+    /* Card Styling */
+    .card {
+        background: #29292c;
+        color: white;
+        border-radius: 12px;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+        transition: transform 0.3s ease-in-out;
+    }
+
+    .card:hover {
+        transform: translateY(-5px);
+    }
+
+    .card-title {
+        font-size: 22px;
+        font-weight: bold;
+        text-align: center;
+        margin-bottom: 15px;
+    }
+
+    /* Input and Select Field Styling */
+    .form-control {
+        border-radius: 8px;
+        background: #1e1e20;
+        border: 1px solid #444;
+        color: white;
+        transition: all 0.3s ease-in-out;
+    }
+
+    .form-control:focus {
+        border-color: #ffffff;
+        box-shadow: 0 0 5px rgba(255, 255, 255, 0.5);
+        background: #29292c;
+        color: white;
+    }
+
+    /* Button */
+    .btn-primary {
+        width: 100%;
+        font-size: 16px;
+        padding: 10px;
+        border-radius: 8px;
+        background-color: #007bff;
+        color: white;
+        transition: all 0.3s ease-in-out;
+        border: none;
+    }
+
+    .btn-primary:hover {
+        background-color: #0056b3;
+    }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+        .col-md-6 {
+            width: 90%;
+        }
+    }
+</style>
+    <div class="page-wrapper">
+        <div class="container-fluid">
+            <div class="row justify-content-center">
+                <div class="col-md-6">
+                    <div class="card">
+                        <form class="form-horizontal" method="post" action="/exsubcategory/insertexsubcategory">
+                            <div class="card-body">
+                                <h4 class="card-title">Add Exsubcategory</h4>
+                                <div class="form-group row">
+                                    <label for="fname"
+                                        class="col-sm-3 text-right control-label col-form-label">Category</label>
+                                    <div class="col-sm-9">
+                                        <select name="category" id="category" onchange="categoryRecord()"
+                                            class="form-control">
+                                            <option value="">---select category---</option>
+                                            <% category.map((cat,index)=>{ %>
+                                                <option value="<%= cat?.id %>">
+                                                    <%= cat?.category %>
+                                                </option>
+                                                <% }) %>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label for="fname"
+                                        class="col-sm-3 text-right control-label col-form-label">Subcategory</label>
+                                    <div class="col-sm-9">
+                                        <select name="subcategory" id="subcategory" class="form-control">
+                                            <option value="">---select subcategory---</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label for="fname"
+                                        class="col-sm-3 text-right control-label col-form-label">Exsubcategory</label>
+                                    <div class="col-sm-9">
+                                        <input type="text" name="exsubcategory" class="form-control"
+                                            placeholder="Exsubcategory Name Here">
+                                    </div>
+                                </div>
+
+                            </div>
+                            <div class="border-top">
+                                <div class="card-body">
+                                    <button type="submit" class="btn btn-primary">Submit</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <script type="text/javascript">
+        const categoryRecord = () => {
+            let categoryid = document.getElementById('category').value;
+            $.ajax({
+                type: "GET",
+                url: `/exsubcategory/ajaxcategorywiserecord?categoryId=${categoryid}`,
+                success: function (res) {
+                    let subcategory = res.subcategory;
+
+                    let tbl = "";
+                    tbl += `<option value="">---select subcategory---</option>`
+                    subcategory.map((cat, index) => {
+                        tbl += `<option value='${cat?._id}'>${cat?.subcategory}</option>`
+                    })
+                    document.getElementById('subcategory').innerHTML = tbl
+
+                }
+            })
+        }
+    </script>
+    <%- include('../footer') %>

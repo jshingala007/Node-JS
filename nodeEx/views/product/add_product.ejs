@@ -1,0 +1,243 @@
+<%- include('../header')%>
+<style>
+    /* Page Wrapper */
+    .page-wrapper {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 80vh;
+
+    }
+
+    /* Card Styling */
+    .card {
+        background: #29292c;
+        color: white;
+        border-radius: 12px;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+        
+        transition: transform 0.3s ease-in-out;
+    }
+
+    .card:hover {
+        transform: translateY(-5px);
+    }
+
+    .card-title {
+        font-size: 22px;
+        font-weight: bold;
+        text-align: center;
+        margin-bottom: 15px;
+    }
+
+    /* Input and Select Field Styling */
+    .form-control {
+        border-radius: 8px;
+        background: #1e1e20;
+        border: 1px solid #444;
+        color: white;
+        transition: all 0.3s ease-in-out;
+    }
+
+    .form-control:focus {
+        border-color: #ffffff;
+        box-shadow: 0 0 5px rgba(255, 255, 255, 0.5);
+        background: #29292c;
+        color: white;
+    }
+
+    /* Button */
+    .btn-primary {
+        width: 90%;
+        align-items: center;
+        justify-content: center;
+        font-size: 16px;
+        padding: 10px;
+        border-radius: 8px;
+        background-color: #007bff;
+        color: white;
+        transition: all 0.3s ease-in-out;
+        border: none;
+    }
+
+    .btn-primary:hover {
+        background-color: #0056b3;
+    }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+        .col-md-6 {
+            width: 90%;
+        }
+    }
+</style>
+
+    <!-- [ Main Content ] start -->
+    <section class="pc-container">
+        <div class="pc-content">
+            <!-- [ Main Content ] start -->
+            <div class="row justify-content-center">
+                <div class="col-md-6">
+                            <!-- [ form-element ] start -->
+                            <div class="card">
+                                <div class="card-body text-center">
+                                    <h4 class="mb-1">Add Product</h4>
+                                    <form action="/product/insertproduct" method="post" enctype="multipart/form-data">
+                                        <div class="form-group row my-3">
+                                            <label
+                                                class="col-form-label col-lg-3 col-sm-12 text-lg-end">Category</label>
+                                            <div class="col-lg-5 col-md-9 col-sm-12">
+                                                <div class="typeahead">
+                                                    <select name="category" id="category" class="form-control"
+                                                        onchange="categoryRecord()">
+                                                        <option value="">-- Select Category --</option>
+                                                        <% category.map((cat,index)=>{%>
+                                                            <option value="<%= cat?.id%>">
+                                                                <%=cat?.category%>
+                                                            </option>
+                                                            <%}) %>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group row my-3">
+                                            <label class="col-form-label col-lg-3 col-sm-12 text-lg-end">Sub
+                                                Category</label>
+                                            <div class="col-lg-5 col-md-9 col-sm-12">
+                                                <div class="typeahead">
+                                                    <select class="form-control" onchange="subcategoryRecord()"
+                                                        id="subcategory" name="subcategory">
+                                                        <option value="">Select a subcategory</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group row my-3">
+                                            <label
+                                                class="col-form-label col-lg-3 col-sm-12 text-lg-end">ExSubCategory</label>
+                                            <div class="col-lg-5 col-md-9 col-sm-12">
+                                                <div class="typeahead">
+                                                    <select name="exsubcategory" id="exsubcategory"
+                                                        class="form-control">
+                                                        <option>-- Select Exsubcategory --</option>
+                                                        <% exsubcategory.map((val)=>{ %>
+                                                            <option value="<%= val.id%>">
+                                                                <% val.exsubcategory %>
+                                                            </option>
+                                                            <% }) %>
+
+                                                    </select>
+                                                </div>
+                                            </div>
+                                        </div>
+
+
+                                        <div class="form-group row mb-3">
+                                            <label class="col-form-label col-lg-3 col-sm-12 text-lg-end">Product</label>
+                                            <div class="col-lg-5 col-md-9 col-sm-12">
+                                                <div class="typeahead">
+                                                    <input class="form-control" name="product" type="text"
+                                                        placeholder="product">
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group row mb-3">
+                                            <label class="col-form-label col-lg-3 col-sm-12 text-lg-end">Price</label>
+                                            <div class="col-lg-5 col-md-9 col-sm-12">
+                                                <div class="typeahead">
+                                                    <input class="form-control" name="price" type="number"
+                                                        placeholder="Price">
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group row mb-3">
+                                            <label
+                                                class="col-form-label col-lg-3 col-sm-12 text-lg-end">Description</label>
+                                            <div class="col-lg-5 col-md-9 col-sm-12">
+                                                <div class="typeahead">
+                                                    <input class="form-control" name="description" type="text"
+                                                        placeholder="Description">
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group row mb-3">
+                                            <label class="col-form-label col-lg-3 col-sm-12 text-lg-end">Imge</label>
+                                            <div class="col-lg-5 col-md-9 col-sm-12">
+                                                <div class="typeahead">
+                                                    <input class="form-control" name="image" type="file">
+
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="text-center pb-sm-2">
+                                            <button type="submit"
+                                                class="btn btn-primary d-inline-flex align-item-center"><i
+                                                    class="ti ti-plus f-18"></i>Submit</button>
+                                            </button>
+                                        </div>
+
+                                    </form>
+                                </div>
+                            </div>
+                </div>
+            </div>
+            <!-- [ Main Content ] end -->
+        </div>
+    </section>
+    <!-- [ Main Content ] end -->
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <script type="text/javascript">
+        const categoryRecord = () => {
+            let categoryId = document.getElementById('category').value;
+
+            $.ajax({
+                type: 'GET',
+                url: `/exsubcategory/ajaxcategorywiserecord?categoryId=${categoryId}`,
+                success: function (res) {
+                    let subcategories = res.subcategory; // Corrected variable name
+                    let options = `<option value="" disabled selected>-- Select SubCategory --</option>`;
+
+                    subcategories.forEach((subcategory) => {
+                        options += `<option value="${subcategory?._id}">${subcategory?.subcategory}</option>`;
+                    });
+
+                    document.getElementById('subcategory').innerHTML = options;
+                },
+                error: function (err) {
+                    console.error("Error fetching subcategories:", err);
+                }
+            });
+        };
+
+        const subcategoryRecord = () => {
+            let subcategoryid = document.getElementById('subcategory').value;
+            $.ajax({
+                type: "GET",
+                url: `/product/ajaxcategorywiserecord?subcategoryId=${subcategoryid}`,
+                success: function (res) {
+                    let exsubcategory = res.exsubcategory;
+                    console.log(exsubcategory);
+                    
+                    let tbl = "";
+                    tbl += `<option value="">Select an exsubcategory</option>`
+                    exsubcategory.map((cat, index) => {
+                        tbl += `<option value='${cat?._id}'>${cat?.exsubcategory}</option>`
+                    })
+                    document.getElementById('exsubcategory').innerHTML = tbl
+
+                }
+            })
+
+        }
+
+    </script>
+
+
+    <%- include('../footer')%>
