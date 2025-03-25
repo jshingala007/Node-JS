@@ -220,13 +220,13 @@ const forgotPassword = async (req, res) => {
         var transporter = nodemailer.createTransport({
             service: 'gmail',
             auth: {
-                user: 'prathamm3786@gmail.com',
-                pass: 'pvnz oxgk ulll opqx'
+                user: 'jayshingala024@gmail.com',
+                pass: 'jn7jnAPss4f63QBp6D'
             }
         });
 
         var mailOptions = {
-            from: 'prathamm3786@gmail.com',
+            from: 'jayshingala024@gmail.com',
             to: useremail,
             subject: 'forgot password',
             html: `<h2 style='color:green'>Hello ${user?.name} Your OTP is ${otp}</h2>`
